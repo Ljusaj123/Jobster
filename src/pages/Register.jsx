@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import RegisterWrapper from "../assets/wrappers/RegisterPage";
 import { FormRow, Logo } from "../components";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../utils/userSlice.js";
+import { redirect } from "react-router-dom";
+
+import customFetch from "../utils/axios.js";
 
 const initialState = {
   name: "",
@@ -12,11 +17,53 @@ const initialState = {
 };
 
 function Register() {
+  const dispatch = useDispatch();
   const [values, setValues] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const registerUser = async () => {
+    setIsLoading(true);
+    const { name, email, password } = values;
+
+    try {
+      await customFetch.post("/auth/register", { name, email, password });
+
+      toast.success("account created successfully");
+      redirect("/login");
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.msg || "please double check your credentials";
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const login = async () => {
+    setIsLoading(true);
+    const { email, password } = values;
+    try {
+      const response = await customFetch.post("/auth/login", {
+        email,
+        password,
+      });
+
+      dispatch(loginUser(response.data));
+      toast.success("logged in successfully");
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.msg || "please double check your credentials";
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(`${name}:${value}`);
     setValues({ ...values, [name]: value });
   };
 
@@ -27,6 +74,7 @@ function Register() {
       toast.error("Please Fill Out All Fields");
       return;
     }
+    isMember ? login() : registerUser();
   };
 
   const toggleMember = () => {
@@ -60,7 +108,7 @@ function Register() {
         />
         <div className="form-row">
           <button type="submit" className="btn btn-block">
-            Submit
+            {isLoading ? "Submiting..." : "Submit"}
           </button>
           <button type="button" className="btn btn-block btn-hipster">
             Demo App
