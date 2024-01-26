@@ -5,7 +5,7 @@ import { FormRow, Logo } from "../components";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../utils/userSlice.js";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import customFetch from "../utils/axios.js";
 
@@ -18,6 +18,7 @@ const initialState = {
 
 function Register() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,9 +28,8 @@ function Register() {
 
     try {
       await customFetch.post("/auth/register", { name, email, password });
-
       toast.success("account created successfully");
-      redirect("/login");
+      toggleMember();
     } catch (error) {
       const errorMessage =
         error?.response?.data?.msg || "please double check your credentials";
@@ -51,6 +51,7 @@ function Register() {
 
       dispatch(loginUser(response.data));
       toast.success("logged in successfully");
+      navigate("/");
     } catch (error) {
       const errorMessage =
         error?.response?.data?.msg || "please double check your credentials";
@@ -78,7 +79,7 @@ function Register() {
   };
 
   const toggleMember = () => {
-    setValues({ ...values, isMember: !values.isMember });
+    setValues({ ...initialState, isMember: !values.isMember });
   };
   return (
     <RegisterWrapper className="full-page">
