@@ -4,7 +4,7 @@ import { FormRow } from "../../components";
 import { useState } from "react";
 import customFetch from "../../utils/axios.js";
 import { toast } from "react-toastify";
-import { updateUser } from "../../utils/userSlice.js";
+import { updateUser, logoutUser } from "../../utils/userSlice.js";
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +40,10 @@ function Profile() {
         error?.response?.data?.msg || "please double check your credentials";
 
       toast.error(errorMessage);
+
+      if (error.response.status === 401) {
+        dispatch(logoutUser());
+      }
     } finally {
       setIsLoading(false);
     }
