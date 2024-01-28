@@ -108,7 +108,7 @@ function Register() {
           handleChange={handleChange}
         />
         <div className="form-row">
-          <button type="submit" className="btn btn-block">
+          <button type="submit" className="btn btn-block" disabled={isLoading}>
             {isLoading ? "Submiting..." : "Submit"}
           </button>
           <button type="button" className="btn btn-block btn-hipster">

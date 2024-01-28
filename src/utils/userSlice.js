@@ -37,9 +37,15 @@ const userSlice = createSlice({
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
     },
+    updateUser: (state, { payload }) => {
+      const { user } = payload;
+      state.user = user;
+      addUserToLocalStorage(user);
+    },
   },
 });
 
 export default userSlice.reducer;
 
-export const { logoutUser, loginUser, toggleSidebar } = userSlice.actions;
+export const { logoutUser, loginUser, toggleSidebar, updateUser } =
+  userSlice.actions;
