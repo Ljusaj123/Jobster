@@ -14,8 +14,11 @@ function AddJob() {
   const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(handleChange({ name: "jobLocation", value: user.location }));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!job.isEditing) {
+      dispatch(handleChange({ name: "jobLocation", value: user.location }));
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (e) => {
@@ -25,7 +28,40 @@ function AddJob() {
       return;
     }
 
-    createJob();
+    if (job.isEditing) {
+      updateJob();
+    } else {
+      createJob();
+    }
+  };
+
+  const updateJob = async () => {
+    const { editJobId, position, company, jobLocation, jobType, status } = job;
+    try {
+      const body = {
+        editJobId,
+        position,
+        company,
+        jobLocation,
+        jobType,
+        status,
+      };
+      await customFetch.patch(`/jobs/${job.editJobId}`, body, {
+        headers: {
+          authorization: `Bearer ${user.token} `,
+        },
+      });
+
+      toast.success("job updated successfully");
+      dispatch(clearValues());
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.msg || "please double check your credentials";
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const createJob = async () => {

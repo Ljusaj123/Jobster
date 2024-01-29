@@ -4,7 +4,7 @@ import JobsWrapper from "../assets/wrappers/JobsContainer";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading";
 import customFetch from "../utils/axios";
-import { setJobs } from "../utils/allJobsSlice";
+import { getJobs } from "../utils/allJobsSlice";
 import { toast } from "react-toastify";
 
 const JobsContainer = () => {
@@ -23,7 +23,7 @@ const JobsContainer = () => {
           },
         });
 
-        dispatch(setJobs(response.data));
+        dispatch(getJobs(response.data));
       } catch (error) {
         const errorMessage =
           error?.response?.data?.msg || "please double check your credentials";
@@ -35,7 +35,7 @@ const JobsContainer = () => {
     };
 
     getAllJobs();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {
@@ -55,7 +55,7 @@ const JobsContainer = () => {
       <h5>jobs info</h5>
       <div className="jobs">
         {jobs.map((job) => {
-          return <Job key={job._id} {...job} />;
+          return <Job key={job._id} setIsLoading={setIsLoading} {...job} />;
         })}
       </div>
     </JobsWrapper>

@@ -23,13 +23,12 @@ const allJobsSlice = createSlice({
   name: "allJobs",
   initialState,
   reducers: {
-    setJobs: (state, { payload }) => {
-      console.log(payload);
+    getJobs: (state, { payload }) => {
       state.jobs = payload.jobs;
     },
   },
 });
 
-export const { setJobs } = allJobsSlice.actions;
+export const { getJobs } = allJobsSlice.actions;
 
 export default allJobsSlice.reducer;

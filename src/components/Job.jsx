@@ -3,8 +3,14 @@ import { Link } from "react-router-dom";
 import JobWrapper from "../assets/wrappers/Job";
 import JobInfo from "./JobInfo";
 import moment from "moment/moment";
+import customFetch from "../utils/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { getJobs } from "../utils/allJobsSlice";
+import { setEditJob } from "../utils/jobSlice";
 
 const Job = ({
+  setIsLoading,
   _id,
   position,
   company,
@@ -13,7 +19,59 @@ const Job = ({
   createdAt,
   status,
 }) => {
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const date = moment(createdAt).format("MMM Do, YYYY");
+
+  const deleteJob = async () => {
+    try {
+      await customFetch.delete(`/jobs/${_id}`, {
+        headers: {
+          authorization: `Bearer ${user.token}`,
+        },
+      });
+      toast.success("job deleted");
+      getAllJobs();
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.msg || "please double check your credentials";
+
+      toast.error(errorMessage);
+    }
+  };
+
+  const getAllJobs = async () => {
+    setIsLoading(true);
+    try {
+      const response = await customFetch("/jobs", {
+        headers: {
+          authorization: `Bearer ${user.token} `,
+        },
+      });
+
+      dispatch(getJobs(response.data));
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.msg || "please double check your credentials";
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const editJob = () => {
+    dispatch(
+      setEditJob({
+        editJobId: _id,
+        position,
+        company,
+        jobLocation,
+        jobType,
+        status,
+      })
+    );
+  };
 
   return (
     <JobWrapper>
@@ -37,7 +95,7 @@ const Job = ({
               to="/add-job"
               className="btn edit-btn"
               onClick={() => {
-                console.log("edit job");
+                editJob();
               }}
             >
               Edit
@@ -46,7 +104,7 @@ const Job = ({
               type="button"
               className="btn delete-btn"
               onClick={() => {
-                console.log("delete  job");
+                deleteJob();
               }}
             >
               Delete
