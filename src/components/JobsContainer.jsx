@@ -6,17 +6,32 @@ import Loading from "./Loading";
 import customFetch from "../utils/axios";
 import { getJobs } from "../utils/allJobsSlice";
 import { toast } from "react-toastify";
+import PageBtnContainer from "./PageButtonContainer";
 
 const JobsContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { jobs } = useSelector((store) => store.allJobs);
+  const {
+    jobs,
+    page,
+    totalJobs,
+    numOfPages,
+    search,
+    searchStatus,
+    searchType,
+    sort,
+  } = useSelector((store) => store.allJobs);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getAllJobs = async () => {
       setIsLoading(true);
+
+      let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
+      if (search) {
+        url = url + `&search=${search}`;
+      }
       try {
-        const response = await customFetch("/jobs");
+        const response = await customFetch(url);
 
         dispatch(getJobs(response.data));
       } catch (error) {
@@ -31,7 +46,7 @@ const JobsContainer = () => {
 
     getAllJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page, search, searchStatus, searchType, sort]);
 
   if (isLoading) {
     return <Loading center />;
@@ -47,12 +62,15 @@ const JobsContainer = () => {
 
   return (
     <JobsWrapper>
-      <h5>jobs info</h5>
+      <h5>
+        {totalJobs} job{jobs.length > 1 && "s"} found
+      </h5>
       <div className="jobs">
         {jobs.map((job) => {
-          return <Job key={job._id} setIsLoading={setIsLoading} {...job} />;
+          return <Job key={job._id} {...job} />;
         })}
       </div>
+      {numOfPages > 1 && <PageBtnContainer />}
     </JobsWrapper>
   );
 };
