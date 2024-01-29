@@ -1,23 +1,58 @@
 import { useDispatch, useSelector } from "react-redux";
 import AddJobWrapper from "../../assets/wrappers/DashboardFormPage";
 import { FormRow } from "../../components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import FormRowSelect from "../../components/FormRowSelect";
 import { clearValues, handleChange } from "../../utils/jobSlice";
+import customFetch from "../../utils/axios";
 
 function AddJob() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const job = useSelector((state) => state.job);
+  const { user } = useSelector((state) => state.user);
 
-  console.log(job);
+  useEffect(() => {
+    dispatch(handleChange({ name: "jobLocation", value: user.location }));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!job.position || !job.company || !job.jobLocation) {
       toast.error("Please Fill Out All Fields");
       return;
+    }
+
+    createJob();
+  };
+
+  const createJob = async () => {
+    setIsLoading(true);
+    const body = {
+      position: job.position,
+      company: job.company,
+      jobLocation: job.jobLocation,
+      jobType: job.jobType,
+      status: job.status,
+    };
+
+    try {
+      await customFetch.post("/jobs", body, {
+        headers: {
+          authorization: `Bearer ${user.token} `,
+        },
+      });
+
+      toast.success("job created successfully");
+      dispatch(clearValues());
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.msg || "please double check your credentials";
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleJobChange = (e) => {

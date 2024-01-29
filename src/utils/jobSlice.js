@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getUserFromLocalStorage } from "./userSlice";
 
 const initialState = {
   isLoading: false,
@@ -23,6 +24,7 @@ const jobSlice = createSlice({
     clearValues: () => {
       return {
         ...initialState,
+        jobLocation: getUserFromLocalStorage()?.location || "",
       };
     },
   },
