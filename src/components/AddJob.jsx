@@ -15,7 +15,7 @@ function AddJob() {
 
   useEffect(() => {
     dispatch(handleChange({ name: "jobLocation", value: user.location }));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (e) => {
