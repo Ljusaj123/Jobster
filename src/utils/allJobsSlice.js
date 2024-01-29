@@ -26,9 +26,14 @@ const allJobsSlice = createSlice({
     getJobs: (state, { payload }) => {
       state.jobs = payload.jobs;
     },
+
+    showStats: (state, { payload }) => {
+      state.stats = payload.defaultStats;
+      state.monthlyApplications = payload.monthlyApplications;
+    },
   },
 });
 
-export const { getJobs } = allJobsSlice.actions;
+export const { getJobs, showStats } = allJobsSlice.actions;
 
 export default allJobsSlice.reducer;

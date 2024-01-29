@@ -62,6 +62,29 @@ function Register() {
     }
   };
 
+  const loginDemo = async () => {
+    setIsLoading(true);
+
+    const credentials = {
+      email: "testUser@test.com",
+      password: "secret",
+    };
+    try {
+      const response = await customFetch.post("/auth/login", credentials);
+
+      dispatch(loginUser(response.data));
+      toast.success("logged in successfully");
+      navigate("/");
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.msg || "please double check your credentials";
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -111,8 +134,12 @@ function Register() {
           <button type="submit" className="btn btn-block" disabled={isLoading}>
             {isLoading ? "Submiting..." : "Submit"}
           </button>
-          <button type="button" className="btn btn-block btn-hipster">
-            Demo App
+          <button
+            type="button"
+            className="btn btn-block btn-hipster"
+            onClick={() => loginDemo()}
+          >
+            {isLoading ? "loading..." : "demo"}
           </button>
           <p>
             {values.isMember ? "Not a member yet?" : "Already a member?"}
