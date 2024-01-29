@@ -27,11 +27,7 @@ function Profile() {
   const updateUserData = async () => {
     try {
       setIsLoading(true);
-      const response = await customFetch.patch("/auth/updateUser", userData, {
-        headers: {
-          authorization: `Bearer ${user.token}`,
-        },
-      });
+      const response = await customFetch.patch("/auth/updateUser", userData);
 
       dispatch(updateUser(response.data));
       toast.success("account updated successfully");

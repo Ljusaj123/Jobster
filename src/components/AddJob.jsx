@@ -39,11 +39,7 @@ function AddJob() {
     };
 
     try {
-      await customFetch.post("/jobs", body, {
-        headers: {
-          authorization: `Bearer ${user.token} `,
-        },
-      });
+      await customFetch.post("/jobs", body);
 
       toast.success("job created successfully");
       dispatch(clearValues());

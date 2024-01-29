@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 
 const JobsContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useSelector((state) => state.user);
   const { jobs } = useSelector((store) => store.allJobs);
   const dispatch = useDispatch();
 
@@ -17,11 +16,7 @@ const JobsContainer = () => {
     const getAllJobs = async () => {
       setIsLoading(true);
       try {
-        const response = await customFetch("/jobs", {
-          headers: {
-            authorization: `Bearer ${user.token} `,
-          },
-        });
+        const response = await customFetch("/jobs");
 
         dispatch(getJobs(response.data));
       } catch (error) {

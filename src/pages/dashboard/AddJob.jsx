@@ -46,11 +46,7 @@ function AddJob() {
         jobType,
         status,
       };
-      await customFetch.patch(`/jobs/${job.editJobId}`, body, {
-        headers: {
-          authorization: `Bearer ${user.token} `,
-        },
-      });
+      await customFetch.patch(`/jobs/${job.editJobId}`, body);
 
       toast.success("job updated successfully");
       dispatch(clearValues());
@@ -75,11 +71,7 @@ function AddJob() {
     };
 
     try {
-      await customFetch.post("/jobs", body, {
-        headers: {
-          authorization: `Bearer ${user.token} `,
-        },
-      });
+      await customFetch.post("/jobs", body);
 
       toast.success("job created successfully");
       dispatch(clearValues());

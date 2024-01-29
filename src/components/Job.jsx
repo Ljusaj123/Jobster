@@ -4,7 +4,7 @@ import JobWrapper from "../assets/wrappers/Job";
 import JobInfo from "./JobInfo";
 import moment from "moment/moment";
 import customFetch from "../utils/axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { getJobs } from "../utils/allJobsSlice";
 import { setEditJob } from "../utils/jobSlice";
@@ -19,17 +19,12 @@ const Job = ({
   createdAt,
   status,
 }) => {
-  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const date = moment(createdAt).format("MMM Do, YYYY");
 
   const deleteJob = async () => {
     try {
-      await customFetch.delete(`/jobs/${_id}`, {
-        headers: {
-          authorization: `Bearer ${user.token}`,
-        },
-      });
+      await customFetch.delete(`/jobs/${_id}`);
       toast.success("job deleted");
       getAllJobs();
     } catch (error) {
@@ -43,11 +38,7 @@ const Job = ({
   const getAllJobs = async () => {
     setIsLoading(true);
     try {
-      const response = await customFetch("/jobs", {
-        headers: {
-          authorization: `Bearer ${user.token} `,
-        },
-      });
+      const response = await customFetch("/jobs");
 
       dispatch(getJobs(response.data));
     } catch (error) {
