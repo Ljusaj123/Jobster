@@ -31,9 +31,18 @@ const allJobsSlice = createSlice({
       state.stats = payload.defaultStats;
       state.monthlyApplications = payload.monthlyApplications;
     },
+
+    handleChange: (state, { payload: { name, value } }) => {
+      // state.page = 1;
+      state[name] = value;
+    },
+    clearFilters: (state) => {
+      return { ...state, ...initialFiltersState };
+    },
   },
 });
 
-export const { getJobs, showStats } = allJobsSlice.actions;
+export const { getJobs, showStats, handleChange, clearFilters } =
+  allJobsSlice.actions;
 
 export default allJobsSlice.reducer;
