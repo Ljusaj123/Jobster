@@ -40,6 +40,10 @@ function Profile() {
       if (error.response.status === 401) {
         dispatch(logoutUser());
       }
+
+      if (error.response.status === 401) {
+        dispatch(logoutUser());
+      }
     } finally {
       setIsLoading(false);
     }

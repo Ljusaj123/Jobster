@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showStats } from "../../utils/allJobsSlice";
 import customFetch from "../../utils/axios";
 import { toast } from "react-toastify";
+import { logoutUser } from "../../utils/userSlice";
 
 const Stats = () => {
   const { monthlyApplications } = useSelector((store) => store.allJobs);
@@ -23,6 +24,10 @@ const Stats = () => {
           error?.response?.data?.msg || "please double check your credentials";
 
         toast.error(errorMessage);
+
+        if (error.response.status === 401) {
+          dispatch(logoutUser());
+        }
       } finally {
         setIsLoading(false);
       }

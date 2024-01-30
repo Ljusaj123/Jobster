@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import FormRowSelect from "../../components/FormRowSelect";
 import { clearValues, handleChange } from "../../utils/jobSlice";
 import customFetch from "../../utils/axios";
+import { logoutUser } from "../../utils/userSlice";
 
 function AddJob() {
   const dispatch = useDispatch();
@@ -53,8 +54,11 @@ function AddJob() {
     } catch (error) {
       const errorMessage =
         error?.response?.data?.msg || "please double check your credentials";
-
       toast.error(errorMessage);
+
+      if (error.response.status === 401) {
+        dispatch(logoutUser());
+      }
     } finally {
       setIsLoading(false);
     }
@@ -78,8 +82,11 @@ function AddJob() {
     } catch (error) {
       const errorMessage =
         error?.response?.data?.msg || "please double check your credentials";
-
       toast.error(errorMessage);
+
+      if (error.response.status === 401) {
+        dispatch(logoutUser());
+      }
     } finally {
       setIsLoading(false);
     }

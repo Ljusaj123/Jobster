@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { getJobs } from "../utils/allJobsSlice";
 import { setEditJob } from "../utils/jobSlice";
+import { logoutUser } from "../utils/userSlice";
 
 const Job = ({
   setIsLoading,
@@ -32,6 +33,9 @@ const Job = ({
         error?.response?.data?.msg || "please double check your credentials";
 
       toast.error(errorMessage);
+      if (error.response.status === 401) {
+        dispatch(logoutUser());
+      }
     }
   };
 
@@ -46,6 +50,9 @@ const Job = ({
         error?.response?.data?.msg || "please double check your credentials";
 
       toast.error(errorMessage);
+      if (error.response.status === 401) {
+        dispatch(logoutUser());
+      }
     } finally {
       setIsLoading(false);
     }

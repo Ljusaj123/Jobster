@@ -7,6 +7,7 @@ import customFetch from "../utils/axios";
 import { getJobs } from "../utils/allJobsSlice";
 import { toast } from "react-toastify";
 import PageBtnContainer from "./PageButtonContainer";
+import { logoutUser } from "../utils/userSlice";
 
 const JobsContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,6 +40,10 @@ const JobsContainer = () => {
           error?.response?.data?.msg || "please double check your credentials";
 
         toast.error(errorMessage);
+
+        if (error.response.status === 401) {
+          dispatch(logoutUser());
+        }
       } finally {
         setIsLoading(false);
       }
