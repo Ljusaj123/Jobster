@@ -6,14 +6,18 @@ import { toast } from "react-toastify";
 
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser, toggleSidebar } from "../utils/userSlice";
+import { clearAllJobsState } from "../utils/allJobsSlice";
+import { clearValues } from "../utils/jobSlice";
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(logoutUser());
+    dispatch(clearValues());
+    dispatch(clearAllJobsState());
     toast.success("User successfuly logout");
   };
 
