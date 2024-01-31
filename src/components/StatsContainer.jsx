@@ -1,7 +1,7 @@
-import StatItem from "./StatItem";
+import { useSelector } from "react-redux";
 import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from "react-icons/fa";
 import StatsContainerWrapper from "../assets/wrappers/StatsContainer";
-import { useSelector } from "react-redux";
+import { StatItem } from ".";
 
 const StatsContainer = () => {
   const { stats } = useSelector((store) => store.allJobs);

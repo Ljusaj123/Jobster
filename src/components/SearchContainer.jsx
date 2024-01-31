@@ -1,23 +1,23 @@
-import FormRowSelect from "./FormRowSelect";
-import FormRow from "./FormRow";
-import Wrapper from "../assets/wrappers/SearchContainer";
+import { useState, useMemo, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { FormRowSelect, FormRow } from ".";
+import SearchWrapper from "../assets/wrappers/SearchContainer";
 import { handleChange, clearFilters } from "../utils/allJobsSlice";
-import { useState, useMemo } from "react";
 
 const SearchContainer = () => {
+  const dispatch = useDispatch();
+
   const [localSearch, setLocalSearch] = useState("");
-  const { search, searchStatus, searchType, sort, sortOptions } = useSelector(
+  const { searchStatus, searchType, sort, sortOptions } = useSelector(
     (store) => store.allJobs
   );
   const { jobTypeOptions, statusOptions } = useSelector((store) => store.job);
-  const dispatch = useDispatch();
 
   const handleSearch = (e) => {
     dispatch(handleChange({ name: e.target.name, value: e.target.value }));
   };
 
-  const debounce = () => {
+  const debounce = useCallback(() => {
     let timeoutID;
     return (e) => {
       setLocalSearch(e.target.value);
@@ -26,7 +26,7 @@ const SearchContainer = () => {
         dispatch(handleChange({ name: e.target.name, value: e.target.value }));
       }, 1000);
     };
-  };
+  }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,20 +34,20 @@ const SearchContainer = () => {
     dispatch(clearFilters());
   };
 
-  const optimizedDebounce = useMemo(() => debounce(), []);
+  const optimizedDebounce = useMemo(() => debounce(), [debounce]);
   return (
-    <Wrapper>
+    <SearchWrapper>
       <form className="form">
         <h4>search form</h4>
         <div className="form-center">
           {/* search position */}
-
           <FormRow
             type="text"
             name="search"
             value={localSearch}
             handleChange={optimizedDebounce}
           />
+
           {/* search by status */}
           <FormRowSelect
             labelText="status"
@@ -56,6 +56,7 @@ const SearchContainer = () => {
             handleChange={handleSearch}
             list={["all", ...statusOptions]}
           />
+
           {/* search by type */}
           <FormRowSelect
             labelText="type"
@@ -64,6 +65,7 @@ const SearchContainer = () => {
             handleChange={handleSearch}
             list={["all", ...jobTypeOptions]}
           />
+
           {/* sort */}
           <FormRowSelect
             name="sort"
@@ -76,7 +78,7 @@ const SearchContainer = () => {
           </button>
         </div>
       </form>
-    </Wrapper>
+    </SearchWrapper>
   );
 };
 

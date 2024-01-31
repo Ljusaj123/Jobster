@@ -1,12 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
-import AddJobWrapper from "../../assets/wrappers/DashboardFormPage";
-import { FormRow } from "../../components";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import FormRowSelect from "../../components/FormRowSelect";
+import { FormRow, FormRowSelect } from ".";
 import { clearValues, handleChange } from "../../utils/jobSlice";
 import customFetch from "../../utils/axios";
 import { logoutUser } from "../utils/userSlice";
+import AddJobWrapper from "../../assets/wrappers/DashboardFormPage";
 
 function AddJob() {
   const dispatch = useDispatch();
@@ -17,7 +16,7 @@ function AddJob() {
   useEffect(() => {
     dispatch(handleChange({ name: "jobLocation", value: user.location }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

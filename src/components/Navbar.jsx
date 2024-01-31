@@ -1,18 +1,17 @@
-import NavBarWrapper from "../assets/wrappers/Navbar";
-import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
-import Logo from "./Logo";
 import { useState } from "react";
-import { toast } from "react-toastify";
-
+import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { Logo } from ".";
 import { logoutUser, toggleSidebar } from "../utils/userSlice";
 import { clearAllJobsState } from "../utils/allJobsSlice";
 import { clearValues } from "../utils/jobSlice";
+import NavBarWrapper from "../assets/wrappers/Navbar";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const [showLogout, setShowLogout] = useState(false);
   const { user } = useSelector((store) => store.user);
-  const dispatch = useDispatch();
 
   const handleLogout = async () => {
     dispatch(logoutUser());
@@ -24,6 +23,7 @@ const Navbar = () => {
   const handleToggle = () => {
     dispatch(toggleSidebar());
   };
+
   return (
     <NavBarWrapper>
       <div className="nav-center">

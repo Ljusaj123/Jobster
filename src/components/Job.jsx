@@ -1,14 +1,14 @@
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import JobWrapper from "../assets/wrappers/Job";
-import JobInfo from "./JobInfo";
-import moment from "moment/moment";
-import customFetch from "../utils/axios";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import moment from "moment/moment";
+import { JobInfo } from ".";
+import customFetch from "../utils/axios";
 import { getJobs } from "../utils/allJobsSlice";
 import { setEditJob } from "../utils/jobSlice";
 import { logoutUser } from "../utils/userSlice";
+import JobWrapper from "../assets/wrappers/Job";
 
 const Job = ({
   setIsLoading,

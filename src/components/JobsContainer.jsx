@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import Job from "./Job";
-import JobsWrapper from "../assets/wrappers/JobsContainer";
 import { useSelector, useDispatch } from "react-redux";
-import Loading from "./Loading";
+import { toast } from "react-toastify";
+import { Job, Loading, PageButtonContainer } from ".";
 import customFetch from "../utils/axios";
 import { getJobs } from "../utils/allJobsSlice";
-import { toast } from "react-toastify";
-import PageBtnContainer from "./PageButtonContainer";
 import { logoutUser } from "../utils/userSlice";
+import JobsWrapper from "../assets/wrappers/JobsContainer";
 
 const JobsContainer = () => {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const {
     jobs,
@@ -21,12 +20,10 @@ const JobsContainer = () => {
     searchType,
     sort,
   } = useSelector((store) => store.allJobs);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const getAllJobs = async () => {
       setIsLoading(true);
-
       let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
       if (search) {
         url = url + `&search=${search}`;
@@ -50,8 +47,7 @@ const JobsContainer = () => {
     };
 
     getAllJobs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, search, searchStatus, searchType, sort]);
+  }, [dispatch, page, search, searchStatus, searchType, sort]);
 
   if (isLoading) {
     return <Loading center />;
@@ -75,7 +71,7 @@ const JobsContainer = () => {
           return <Job key={job._id} {...job} />;
         })}
       </div>
-      {numOfPages > 1 && <PageBtnContainer />}
+      {numOfPages > 1 && <PageButtonContainer />}
     </JobsWrapper>
   );
 };
