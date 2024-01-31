@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FormRowSelect, FormRow } from ".";
 import SearchWrapper from "../assets/wrappers/SearchContainer";
-import { handleChange, clearFilters } from "../utils/allJobsSlice";
+import { handleChange, clearFilters } from "../utils/slices/allJobsSlice";
 
 const SearchContainer = () => {
   const dispatch = useDispatch();

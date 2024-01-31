@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { FormRow, FormRowSelect } from ".";
 import { clearValues, handleChange } from "../../utils/jobSlice";
 import customFetch from "../../utils/axios";
-import { logoutUser } from "../utils/userSlice";
+import { logoutUser } from "../utils/slices/userSlice";
 import AddJobWrapper from "../../assets/wrappers/DashboardFormPage";
 
 function AddJob() {

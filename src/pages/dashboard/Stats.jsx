@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { StatsContainer, Loading, ChartsContainer } from "../../components";
-import { showStats } from "../../utils/allJobsSlice";
+import { showStats } from "../../utils/slices/allJobsSlice";
 import customFetch from "../../utils/axios";
-import { logoutUser } from "../../utils/userSlice";
+import { logoutUser } from "../../utils/slices/userSlice";
 
 const Stats = () => {
   const dispatch = useDispatch();

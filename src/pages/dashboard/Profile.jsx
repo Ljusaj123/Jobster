@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { FormRow } from "../../components";
 import customFetch from "../../utils/axios.js";
-import { updateUser, logoutUser } from "../../utils/userSlice.js";
+import { updateUser, logoutUser } from "../../utils/slices/userSlice.js";
 import ProfileWrapper from "../../assets/wrappers/DashboardFormPage";
 
 function Profile() {

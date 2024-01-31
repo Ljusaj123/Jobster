@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { Job, Loading, PageButtonContainer } from ".";
 import customFetch from "../utils/axios";
-import { getJobs } from "../utils/allJobsSlice";
-import { logoutUser } from "../utils/userSlice";
+import { getJobs } from "../utils/slices/allJobsSlice";
+import { logoutUser } from "../utils/slices/userSlice";
 import JobsWrapper from "../assets/wrappers/JobsContainer";
 
 const JobsContainer = () => {

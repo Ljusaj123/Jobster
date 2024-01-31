@@ -3,9 +3,9 @@ import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Logo } from ".";
-import { logoutUser, toggleSidebar } from "../utils/userSlice";
-import { clearAllJobsState } from "../utils/allJobsSlice";
-import { clearValues } from "../utils/jobSlice";
+import { logoutUser, toggleSidebar } from "../utils/slices/userSlice";
+import { clearAllJobsState } from "../utils/slices/allJobsSlice";
+import { clearValues } from "../utils/slices/jobSlice";
 import NavBarWrapper from "../assets/wrappers/Navbar";
 
 const Navbar = () => {

@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { FormRow, FormRowSelect } from "../../components";
 
-import { clearValues, handleChange } from "../../utils/jobSlice";
+import { clearValues, handleChange } from "../../utils/slices/jobSlice";
 import customFetch from "../../utils/axios";
-import { logoutUser } from "../../utils/userSlice";
+import { logoutUser } from "../../utils/slices/userSlice";
 import AddJobWrapper from "../../assets/wrappers/DashboardFormPage";
 
 function AddJob() {

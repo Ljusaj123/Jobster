@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 import moment from "moment/moment";
 import { JobInfo } from ".";
 import customFetch from "../utils/axios";
-import { getJobs } from "../utils/allJobsSlice";
-import { setEditJob } from "../utils/jobSlice";
-import { logoutUser } from "../utils/userSlice";
+import { getJobs } from "../utils/slices/allJobsSlice";
+import { setEditJob } from "../utils/slices/jobSlice";
+import { logoutUser } from "../utils/slices/userSlice";
 import JobWrapper from "../assets/wrappers/Job";
 
 const Job = ({

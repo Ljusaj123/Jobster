@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FormRow, Logo } from "../components";
-import { loginUser } from "../utils/userSlice.js";
+import { loginUser } from "../utils/slices/userSlice.js";
 import customFetch from "../utils/axios.js";
 import RegisterWrapper from "../assets/wrappers/RegisterPage";
 
