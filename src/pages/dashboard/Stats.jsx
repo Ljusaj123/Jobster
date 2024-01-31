@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import { StatsContainer, Loading, ChartsContainer } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { StatsContainer, Loading, ChartsContainer } from "../../components";
 import { showStats } from "../../utils/allJobsSlice";
 import customFetch from "../../utils/axios";
-import { toast } from "react-toastify";
 import { logoutUser } from "../../utils/userSlice";
 
 const Stats = () => {
-  const { monthlyApplications } = useSelector((store) => store.allJobs);
-
   const dispatch = useDispatch();
-
+  const { monthlyApplications } = useSelector((store) => store.allJobs);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {

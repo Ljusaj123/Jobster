@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-
-import RegisterWrapper from "../assets/wrappers/RegisterPage";
-import { FormRow, Logo } from "../components";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../utils/userSlice.js";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
+import { FormRow, Logo } from "../components";
+import { loginUser } from "../utils/userSlice.js";
 import customFetch from "../utils/axios.js";
+import RegisterWrapper from "../assets/wrappers/RegisterPage";
 
 const initialState = {
   name: "",

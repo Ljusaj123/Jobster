@@ -1,12 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import AddJobWrapper from "../../assets/wrappers/DashboardFormPage";
-import { FormRow } from "../../components";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import FormRowSelect from "../../components/FormRowSelect";
+import { FormRow, FormRowSelect } from "../../components";
+
 import { clearValues, handleChange } from "../../utils/jobSlice";
 import customFetch from "../../utils/axios";
 import { logoutUser } from "../../utils/userSlice";
+import AddJobWrapper from "../../assets/wrappers/DashboardFormPage";
 
 function AddJob() {
   const dispatch = useDispatch();
