@@ -4,7 +4,7 @@ Jobster is an app to track job application process in ReactJS. The app is a part
 
 ## Live demo
 
-Link :
+Link : [https://legendary-dasik-7c5849.netlify.app/landing](https://legendary-dasik-7c5849.netlify.app/landing)
 
 ## Techologies
 
