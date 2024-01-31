@@ -92,8 +92,12 @@ The base URL for all API endpoints is: `https://jobify-prod.herokuapp.com/api/v1
 - returns { defaultStats:{pending:24,interview:27,declined:24}, monthlyApplications:[{date:"Nov 2021",count:5},{date:"Dec 2021",count:4} ] }
 - last six months
 
-##Screenshots
+## Screenshots
+
+### Stats page
 
 ## ![Stats](./public/stats.png)
+
+### All jobs page
 
 ## ![All Jobs](./public/allJobs.png)
